@@ -2,7 +2,7 @@ require "rspec"
 require "./lib/author"
 require "./lib/book"
 
-RSpec.describe Book do 
+RSpec.describe Author do 
   before(:each) do 
     @charlotte_bronte = Author.new({first_name: "Charlotte", last_name: "Bronte"})
   end
