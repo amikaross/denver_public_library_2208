@@ -22,7 +22,7 @@ RSpec.describe Book do
   end
 
   describe "#write" do 
-    it "creates a Book object" do 
+    it "creates and returns a Book object" do 
       jane_eyre = @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
       expect(jane_eyre.class).to eq Book
       expect(jane_eyre.title).to eq "Jane Eyre"
