@@ -53,4 +53,57 @@ RSpec.describe Library do
       expect(@dpl.publication_time_frame_for(@harper_lee)).to eq({:start=>"1960", :end=>"1960"})
     end
   end
+
+  describe "checkout" do 
+    it "takes a book argument and returns boolean depending on whether book exists in library" do 
+      expect(@dpl.checkout(@mokcingbird)).to eq false
+      expect(@dpl.checkout(@jane_eyre)).to eq false
+      @dpl.add_author(@charlotte_bronte)
+      @dpl.add_author(@harper_lee)
+      expect(@dpl.checkout(@jane_eyre)).to eq true 
+    end
+
+    it "adds the checked-out book to a list of checked-out books" do 
+      @dpl.add_author(@charlotte_bronte)
+      @dpl.add_author(@harper_lee)
+      @dpl.checkout(@jane_eyre)
+      expect(@dpl.checked_out_books).to eq [@jane_eyre]
+    end
+
+    it "returns false if the requested book is already checked out" do 
+      @dpl.add_author(@charlotte_bronte)
+      @dpl.add_author(@harper_lee)
+      @dpl.checkout(@jane_eyre)
+      expect(@dpl.checkout(@jane_eyre)).to eq false
+    end
+  end
+
+  describe "return" do 
+    it "allows the book to be checked out again and removes it from the checked_out_books list" do 
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@mockingbird)
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@villette)
+    expect(@dpl.checked_out_books).to eq [@mockingbird, @jane_eyre, @villette]
+    expect(@dpl.checkout(@mockingbird)).to eq false
+    @dpl.return(@mockingbird)
+    expect(@dpl.checked_out_books).to eq [@jane_eyre, @villette]
+    expect(@dpl.checkout(@mockingbird)).to eq true 
+  end
+
+  describe "#most_popular_book" do 
+    it "should return the book that has been checked out most" do 
+      @dpl.add_author(@charlotte_bronte)
+      @dpl.add_author(@harper_lee)
+      @dpl.checkout(@mockingbird)
+      @dpl.checkout(@jane_eyre)
+      @dpl.checkout(@villette)
+      @dpl.return(@mockingbird)
+      @dpl.checkout(@mockingbird)
+      @dpl.return(@mockingbird)
+      @dpl.checkout(@mockingbird)
+      expect(@dpl.most_popular_book).to eq @mockingbird
+    end
+  end
 end 
