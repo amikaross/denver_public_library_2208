@@ -9,6 +9,7 @@ class Library
     @books = []
     @authors = []
     @checked_out_books = []
+    @checkout_counter = Hash.new(0)
   end
 
   def add_author(author)
@@ -25,9 +26,18 @@ class Library
   def checkout(book)
     if @books.include?(book) && !@checked_out_books.include?(book) 
       @checked_out_books << book 
+      @checkout_counter[book] += 1
       true 
     else 
       false 
     end
+  end
+
+  def return(book)
+    @checked_out_books.delete(book)
+  end
+
+  def most_popular_book 
+    @checkout_counter.key(@checkout_counter.values.max)
   end
 end
