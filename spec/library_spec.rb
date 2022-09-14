@@ -80,16 +80,17 @@ RSpec.describe Library do
 
   describe "return" do 
     it "allows the book to be checked out again and removes it from the checked_out_books list" do 
-    @dpl.add_author(@charlotte_bronte)
-    @dpl.add_author(@harper_lee)
-    @dpl.checkout(@mockingbird)
-    @dpl.checkout(@jane_eyre)
-    @dpl.checkout(@villette)
-    expect(@dpl.checked_out_books).to eq [@mockingbird, @jane_eyre, @villette]
-    expect(@dpl.checkout(@mockingbird)).to eq false
-    @dpl.return(@mockingbird)
-    expect(@dpl.checked_out_books).to eq [@jane_eyre, @villette]
-    expect(@dpl.checkout(@mockingbird)).to eq true 
+      @dpl.add_author(@charlotte_bronte)
+      @dpl.add_author(@harper_lee)
+      @dpl.checkout(@mockingbird)
+      @dpl.checkout(@jane_eyre)
+      @dpl.checkout(@villette)
+      expect(@dpl.checked_out_books).to eq [@mockingbird, @jane_eyre, @villette]
+      expect(@dpl.checkout(@mockingbird)).to eq false
+      @dpl.return(@mockingbird)
+      expect(@dpl.checked_out_books).to eq [@jane_eyre, @villette]
+      expect(@dpl.checkout(@mockingbird)).to eq true 
+    end 
   end
 
   describe "#most_popular_book" do 
